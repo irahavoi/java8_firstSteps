@@ -1,0 +1,14 @@
+Method references can be seen as shorthand for lambdas calling only a specific method.
+
+When you need a method reference, the target reference is
+placed before the delimiter :: and the name of the method is provided after it. For example,
+Apple::getWeight is a method reference to the method getWeight defined in the Apple class.
+
+Lambda 										Method reference equivalent
+(Apple a) -> a.getWeight() 					Apple::getWeight
+() -> Thread.currentThread().dumpStack() 	Thread.currentThread()::dumpStack
+(str, i) -> str.substring(i) 				String::substring
+(String s) -> System.out.println(s) 		System.out::println
+
+You can think of method references as syntactic sugar for lambdas that refer only to a single
+method because you write less to express the same thing.

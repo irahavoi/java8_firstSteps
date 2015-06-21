@@ -1,0 +1,38 @@
+Standard Functional interfaces (java.util.function):
+
+java.util.function.Predicate<T>
+	boolean test(T t);
+You might want to use this interface when you need to represent a boolean expression that uses an object of type T.
+
+java.util.function.Consumer<T>
+	T accept();
+You might use this interface when you need to access an object of type T and perform some operations on it.
+
+java.util.function.Function<T, R>
+	R apply(T);
+	
+	
+Lambdas can use type inference:
+the compiler has access to the types of the parameters of a lambda expression, 
+and they can be omitted in the lambda syntax:
+
+Comparator<Apple> c = (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight());
+is the same as:
+Comparator<Apple> c = (a1, a2) -> a1.getWeight().compareTo(a2.getWeight());	
+
+Note that sometimes it’s more readable to include the types explicitly and sometimes more
+readable to exclude them. There’s no rule for which way is better; developers must make their
+own choices about what makes their code more readable.
+
+Lambdas can use local variables.
+Nonetheless, there’s a small twist: there are some restrictions on what you can do with these
+variables. Lambdas are allowed to capture (that is, to reference in their bodies) instance
+variables and static variables without restrictions. But local variables have to be explicitly
+declared final or are effectively final. In other words, lambda expressions can capture local
+variables that are assigned to them only once.
+
+It helps to think that lambdas close over values rather
+than variables. As explained previously, this restriction exists because local variables live on the
+stack and are implicitly confined to the thread they’re in. Allowing capture of mutable local
+variables opens new thread-unsafe possibilities, which are undesirable (instance variables are
+fine because they live on the heap, which is shared across threads).
