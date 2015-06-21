@@ -34,7 +34,10 @@ public class PredicateExample {
 		 * Sorting using a lambda:
 		 */
 		filteredApples.sort(
-				(Apple first, Apple second) -> first.getWeight().compareTo(second.getWeight())
+				(Apple first, Apple second) -> {
+					System.out.println("Sorting..");
+					return first.getWeight().compareTo(second.getWeight());
+				}
 		);
 		
 		aService.prettyPrintApple(filteredApples, new AppleWeightColorPrinter());
