@@ -2,6 +2,7 @@ package com.rahavoi.streams;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Runner {
 	public static void main(String[] args){
@@ -15,5 +16,19 @@ public class Runner {
 				new Dish("pizza", true, 550, Dish.Type.OTHER),
 				new Dish("prawns", false, 300, Dish.Type.FISH),
 				new Dish("salmon", false, 450, Dish.Type.FISH) );
+		
+		
+		System.out.println("Getting dishes with more than 400 calories. Ascending order:");
+		
+		menu.stream()
+			.filter(d -> d.getCalories() > 400)
+			.sorted((d1, d2) -> d1.getCalories() - d2.getCalories())
+			.limit(3)
+			.collect(Collectors.toList())
+			.forEach(d -> System.out.println(d.getName() + " " + d.getCalories()));
+		
+		
+		
+		
 	}
 }
