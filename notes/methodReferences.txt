@@ -12,3 +12,12 @@ Lambda 										Method reference equivalent
 
 You can think of method references as syntactic sugar for lambdas that refer only to a single
 method because you write less to express the same thing.
+
+There are three main kinds of method references:
+1. A method reference to a static method (for example, the method parseInt of Integer, written
+Integer::parseInt)
+2. A method reference to an instance method of an arbitrary type (for example, the method
+length of a String, written String::length)
+3. A method reference to an instance method of an existing object (for example, suppose you
+have a local variable expensiveTransaction that holds an object of type Transaction, which
+supports an instance method getValue; you can write expensiveTransaction::getValue)
