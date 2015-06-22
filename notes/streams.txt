@@ -1,0 +1,45 @@
+Intermediate operations:
+	filter, map, limit, sorted, distict
+Terminal operations:
+	forEach, count, collect
+	
+	
+Filtering and Slicing:
+filter() method takes a predicate as an argument and returns a stream including all elements matching this predicate.
+
+Streams also support a method called distinct that returns a stream with unique elements
+(according to the implementation of the hashCode and equals methods of the objects produced
+by the stream).
+
+numbers.stream()
+	.filter(i -> i % 2 == 0)
+	.distinct()
+	
+	
+Truncating a stream:
+Streams support the limit(n) method, which returns another stream that’s no longer than a
+given size.
+
+Streams support the skip(n) method to return a stream that discards the first n elements. If the
+stream has fewer elements than n, then an empty stream is returned.
+
+Arrays.stream() <-- Takes an array and produces a stream.
+
+String[] arrayOfWords = {"Goodbye", "World"};
+Stream<String> streamOfwords = Arrays.stream(arrayOfWords);
+
+flatMap method lets you replace each value of a stream with another stream
+and then concatenates all the generated streams into a single stream.	
+
+
+
+Finding and matching:
+Another common data processing idiom is finding whether some elements in a set of data match
+a given property. The Streams API provides such facilities through the 
+allMatch, 
+anyMatch,
+noneMatch, 
+findFirst, 
+findAny methods of a stream.
+
+
