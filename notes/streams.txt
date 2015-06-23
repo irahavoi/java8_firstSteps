@@ -43,3 +43,6 @@ findFirst,
 findAny methods of a stream.
 
 
+
+findFirst and findAny are very similar. the difference is in the parallel environment - 
+if you do not care about the ordering, use findAny, otherwise findFirst

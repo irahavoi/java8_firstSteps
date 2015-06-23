@@ -2,6 +2,7 @@ package com.rahavoi.streams;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Runner {
@@ -31,6 +32,18 @@ public class Runner {
 			.map(Dish::getCalories)
 			.collect(Collectors.toList())
 			.forEach(calories -> System.out.println(calories));
+		
+		//Finding the sum of all callories 0 is the starting number to be used in the lambda:
+		int total = menu.stream().map(d -> d.getCalories()).reduce(0, (a, b) -> a + b);
+		System.out.println("The sum of calories in all dishes is: " + total);
+		
+		
+		//Calculating maximum:
+		Optional<Integer> maxCal = menu.stream().map(d -> d.getCalories()).reduce(Integer::max);
+		System.out.println("Maximum calories: " + maxCal.get());
+		//Calculating minimum:
+		Optional<Integer> minCal = menu.stream().map(d -> d.getCalories()).reduce(Integer::min);
+		System.out.println("Minimum calories: " + minCal.get());
 		
 		
 		
