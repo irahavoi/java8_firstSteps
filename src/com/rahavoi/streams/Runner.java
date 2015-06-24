@@ -34,7 +34,7 @@ public class Runner {
 			.forEach(calories -> System.out.println(calories));
 		
 		//Finding the sum of all callories 0 is the starting number to be used in the lambda:
-		int total = menu.stream().map(d -> d.getCalories()).reduce(0, (a, b) -> a + b);
+		int total = menu.stream().mapToInt(d -> d.getCalories()).sum();
 		System.out.println("The sum of calories in all dishes is: " + total);
 		
 		
