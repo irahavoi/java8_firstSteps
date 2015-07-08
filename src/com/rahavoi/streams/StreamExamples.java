@@ -18,7 +18,7 @@ public class StreamExamples {
 		int sum = Arrays.stream(numbers).sum();
 		System.out.println(sum);
 		
-		
+		//File stream:
 		try {
 			Stream<String> lines = Files.lines(Paths.get("C:\\work\\java8_firstSteps\\src\\words.txt"), Charset.defaultCharset());
 			long uniqueWords = lines.flatMap(line -> Arrays.stream(line.split(" ")))
@@ -29,7 +29,26 @@ public class StreamExamples {
 			lines.close();
 		} catch(IOException ioe){
 			ioe.printStackTrace();
-		} finally{
 		}
+		
+		
+		System.out.println("Look, ma: infinite stream:");
+		Stream.iterate(0, n -> n +2)
+			.limit(10)
+			.forEach(System.out::println);
+		
+		//Iterate applies successively a function on each new produced number:
+		System.out.println("Fibbonacci:");
+		Stream.iterate(new int[]{0,1}, t -> new int[]{t[1], t[0] + t[1]})
+			.limit(20)
+			.forEach(t -> System.out.println(t[1]));
+		
+		System.out.println("Random numbers:");
+		//Generate takes a lambda of type supplier to provide new values:
+		//(SUPPLIER DOES NOT HAVE TO BE STATELESS. but stateful suppliers are not safe in parallel code)
+		Stream.generate(Math::random)
+			.limit(5)
+			.forEach(System.out::println);
+		
 	}
 }
