@@ -1,0 +1,34 @@
+Basic Recommendation for Parallel computing with Java:
+
+* Watch out for boxing. Automatic boxing and unboxing operations can dramatically hurt performance.
+Java 8 includes primitive streams (IntStream, LongStream, and DoubleStream) to avoid such
+operations, so use them when possible.
+
+* Some operations naturally perform worse on a parallel stream than on a sequential stream. In
+particular, operations such as limit and findFirst that rely on the order of the elements are expensive
+in a parallel stream. For example, findAny will perform better than findFirst because it isn’t
+constrained to operate in the encounter order.
+
+* For a small amount of data, choosing a parallel stream is almost never a winning decision. The
+advantages of processing in parallel only a few elements aren’t enough to compensate for the
+additional cost introduced by the parallelization process.
+
+* Take into account how well the data structure underlying the stream decomposes. For instance, an
+ArrayList can be split much more efficiently than a LinkedList, because the first can be evenly
+divided without traversing it, as it’s necessary to do with the second. Also, the primitive streams
+created with the range factory method can be decomposed quickly. 
+You can get full control of this decomposition process by implementing your own Spliterator.
+
+* The characteristics of a stream, and how the intermediate operations through the pipeline modify
+them, can change the performance of the decomposition process. For example, a SIZED stream can
+be divided into two equal parts, and then each part can be processed in parallel more effectively, but a
+filter operation can throw away an unpredictable number of elements, making the size of the stream
+itself unknown.
+
+"Source" --> "Decomposability"
+ArrayList --> Excellent
+LinkedList --> Poor
+IntStream.range --> Excellent
+Stream.iterate --> Poor
+HashSet --> Good
+TreeSet --> Good
