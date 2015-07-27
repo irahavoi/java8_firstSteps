@@ -1,10 +1,23 @@
 package com.rahavoi.parallel;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 public class Shop {
-	public double getPrice(String product){
-		return calculatePrice(product);
+	private String name;
+	
+	public Shop(String name){
+		this.name = name;
+	}
+	public Future<Double> getPriceAsync(String product){
+		CompletableFuture<Double> futurePrice = new CompletableFuture<>();
+		new Thread(() -> {
+			double price = calculatePrice(product);
+			futurePrice.complete(price);
+		}).start();
+		
+		return futurePrice;
 	}
 	
 	private double calculatePrice(String product){
@@ -19,4 +32,18 @@ public class Shop {
 			throw new RuntimeException(e);
 		}
 	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 }
