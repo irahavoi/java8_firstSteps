@@ -1,32 +1,30 @@
 package com.rahavoi.parallel;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public class ShopClient {
+	public static List<Shop> shops = Arrays.asList(new Shop("Best Shop"),
+			new Shop("ShopMart"),
+			new Shop("SuperShop"),
+			new Shop("CanadianShop"));
+	
 	public static void main(String [] args){
-		Shop shop = new Shop("Best Shop");
+		
 		long start = System.nanoTime();
 		
-		Future<Double> futurePrice = shop.getPriceAsync("my favorite product");
+		System.out.println(findPrices("myPhone332s"));
+		
 		long invocationTime = ((System.nanoTime() - start) / 1_000_000);
 		
 		System.out.println("Invocation returned after " + invocationTime + "msecs");
-		
-		// Do some other work, without waiting for futurePrice to be returned
-		System.out.println("working...");
-		System.out.println("working...");
-		
-		try{
-			double price = futurePrice.get();
-			System.out.printf("Price is  %.2f%n", price);
-		} catch(Exception e){
-			throw new RuntimeException(e);
-		}
-		
-		long retrievalTime = ((System.nanoTime() - start) / 1_000_000);
-		System.out.println("Price returned after " + retrievalTime + " msecs.");
-		
-		
-		
+	}
+	
+	public static List<String> findPrices(String product){
+		return shops.stream()
+				.map(shop -> String.format("%s format is %.2f", shop.getName(), shop.getPrice(product)))
+				.collect(Collectors.toList());
 	}
 }

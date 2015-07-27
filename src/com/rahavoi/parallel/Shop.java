@@ -10,6 +10,18 @@ public class Shop {
 	public Shop(String name){
 		this.name = name;
 	}
+	
+	public Double getPrice(String product){
+		Double result = null;
+		try{
+			result = getPriceAsync(product).get();
+		} catch(Exception e){
+			throw new RuntimeException(e);
+		}
+		
+		return result;
+	}
+	
 	public Future<Double> getPriceAsync(String product){
 		return CompletableFuture.supplyAsync(() -> calculatePrice(product));
 	}
